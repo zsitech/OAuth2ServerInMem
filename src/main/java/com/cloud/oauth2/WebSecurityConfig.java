@@ -42,7 +42,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .requestMatchers().anyRequest()
             .and()
             .authorizeRequests()
-            .antMatchers("/oauth/*").permitAll();
+            .antMatchers("/oauth/*").permitAll()
+            .and()
+        	.authorizeRequests()
+        	.antMatchers("/actuator/*").permitAll();	// 放开健康检查的节点权限
+        
       
     }
 }
