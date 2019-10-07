@@ -34,10 +34,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		String finalSecret = "{bcrypt}" + new BCryptPasswordEncoder().encode("secretcode");
 		
 		clients.inMemory()        
-		.withClient("myclient")        
-		.secret(finalSecret)        
-		.authorizedGrantTypes("refresh_token", "password", "client_credentials")
-		.scopes("read","write");    
+				.withClient("myclient")        
+				.secret(finalSecret)        
+				.authorizedGrantTypes("refresh_token", "password", "client_credentials")
+				.scopes("read","write");    
 	} 
 	
 	@Override    
