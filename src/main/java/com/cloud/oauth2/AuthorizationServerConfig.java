@@ -31,7 +31,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Override   
 	public void configure(ClientDetailsServiceConfigurer clients) throws      
 	Exception {     
-		String finalSecret = "{bcrypt}" + new BCryptPasswordEncoder().encode("secretcode");
+		String finalSecret = "{bcrypt}" + new BCryptPasswordEncoder().encode("000000");
 		
 		clients.inMemory()        
 				.withClient("myclient")        

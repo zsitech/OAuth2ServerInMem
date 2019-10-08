@@ -26,27 +26,31 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return super.userDetailsServiceBean();   
 	}
 	
+	// 必须设置，否则报这个错误：There is no PasswordEncoder mapped for the id “null”
+	@Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        // 设置默认的加密方式
+        return new BCryptPasswordEncoder();
+    }
+	
 	@Override   
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {     
-		auth.inMemoryAuthentication().passwordEncoder(new BCryptPasswordEncoder())
-    	.withUser("user").password(new BCryptPasswordEncoder().encode("123456")).roles("USER")
-    	.and() 
-    	.withUser("admin").password(new BCryptPasswordEncoder().encode("654321")).roles("USER", "ADMIN"); 
+		auth.inMemoryAuthentication()
+			.passwordEncoder(new BCryptPasswordEncoder()) // 必须要，不能少
+    		.withUser("user").password(new BCryptPasswordEncoder().encode("123456")).roles("USER")
+    		.and() 
+    		.withUser("admin").password(new BCryptPasswordEncoder().encode("654321")).roles("USER", "ADMIN"); 
 	}
 	
 	// 这个是必须的，要不验证不了
 	@Override
-    protected void configure(HttpSecurity http) throws Exception {
-  
-        http
-            .requestMatchers().anyRequest()
+    protected void configure(HttpSecurity http) throws Exception {  
+        http.requestMatchers().anyRequest()
             .and()
             .authorizeRequests()
             .antMatchers("/oauth/*").permitAll()
             .and()
         	.authorizeRequests()
-        	.antMatchers("/actuator/*").permitAll();	// 放开健康检查的节点权限
-        
-      
+        	.antMatchers("/actuator/*").permitAll();	// 放开健康检查的节点权限   
     }
 }

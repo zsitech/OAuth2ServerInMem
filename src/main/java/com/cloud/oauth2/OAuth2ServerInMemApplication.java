@@ -18,7 +18,7 @@ public class OAuth2ServerInMemApplication {
 
 	@RequestMapping(value="/security")
 	public String security() {
-		return "security.";
+		return "security in mem.";
 	}
 	
 	@RequestMapping(value = { "/user" }, produces = "application/json")    
